@@ -31,7 +31,7 @@
                                   <tr>
                                   <th>#</th>
                                   <th>Chuyên khoa</th>
-                                  <!-- <th>Thời gian tạo</th> -->
+                                  <th>Anh đại diện</th>
                                   <th>Danh sách bác sĩ</th>
                                   <th></th>
                                   </tr>
@@ -39,15 +39,18 @@
                               <tbody>
                               @foreach ($proficiencies as $proficiency)
                                   <tr>
-                                  <th scope="row">{{$proficiency->id}}</th>
-                                  <td>{{$proficiency->name}}</td>
-                                  <!-- <td>{{$proficiency->created_at}}</td> -->
+                                  <td scope="row">{{$proficiency->id}}</td>
+                                  <td scope="row">{{$proficiency->name}}</td>
                                   <td>
-                                      <ul>
+                                    <img src="{{ asset('uploads/chuyenkhoa/') . '/'.$proficiency->pro_avatar }}" width="100px" alt="">
+                                  </td>
+                                  <td>{{$proficiency->created_at}}</td>
+                                  <td>
+                                      <!-- <ul> -->
                                         @foreach($proficiency->user as $u)
-                                        <li><a href="#">{{ $u->name }}</a></li>
+                                        <a href="/doctor-profile/{{$u->slug}}">{{ $u->name }}</a>
                                         @endforeach
-                                      </ul>
+                                      <!-- </ul> -->
                                   </td>
                                   <td>
                                    <a href="edit/{{$proficiency->id}}" button type="button" class="btn btn-primary btn-sm" >Chỉnh sửa</button>

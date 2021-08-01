@@ -13,7 +13,7 @@ class Proficiency extends Model
    // use FilterPaginateOrder;
 
     protected $fillable = [
-        'name',
+        'name', 'pro_avatar'
     ];
 
     protected $filter = [

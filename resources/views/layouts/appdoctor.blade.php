@@ -13,6 +13,8 @@
     <link href="{{asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{asset('css/master.css') }}" rel="stylesheet">
     <link href="{{asset('css/flag-icon.min.css') }}" rel="stylesheet">
+    <link href="{{asset('css/style.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
 </head>
 
 <body>
@@ -28,7 +30,10 @@
                     <a href="{{ url('/medic/appointment/home') }}"><i class="fas fa-layer-group"></i> Lịch hẹn</a>                    
                 </li>
                 <li>
-                    <a href="{{ url('/medic/profile') }}"><i class="fas fa-user-friends"></i> Hồ sơ cá nhân</a>                    
+                    <a href="{{ url('/medic/profile/edit') }}"><i class="fas fa-user-friends"></i> Hồ sơ cá nhân</a>                    
+                </li>  
+                <li>
+                    <a href="{{ url('/medic/schedule-timings') }}"><i class="fas fa-user-friends"></i> Thiết lập thời gian khám</a>                    
                 </li>                
             </ul>
         </nav>
@@ -104,7 +109,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a class="col-sm-6 col-md-6 col-lg-3" href="{{ url('/medic/profile') }}">
+                        <a class="col-sm-6 col-md-6 col-lg-3" href="{{ url('/medic/profile/edit') }}">
                             <div >
                                 <div class="card">
                                     <div class="content">
@@ -112,6 +117,22 @@
                                             <div class="dfd text-center">
                                                 <i class="orange large-icon mb-2 fas fa-user-shield"></i>
                                                 <h4 class="mb-0">Hồ sơ cá nhân</h4>
+                                                <!-- <p class="text-muted">INSTAGRAM FOLLOWERS</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a class="col-sm-6 col-md-6 col-lg-3" href="{{ url('/medic/schedule-timings') }}">
+                            <div >
+                                <div class="card">
+                                    <div class="content">
+                                        <div class="row">
+                                            <div class="dfd text-center">
+                                                <i class="orange large-icon mb-2 fas fa-hourglass-start"></i>
+                                                <h4 class="mb-0">Thời gian khám</h4>
                                                 <!-- <p class="text-muted">INSTAGRAM FOLLOWERS</p> -->
                                             </div>
                                         </div>
@@ -142,7 +163,8 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/jquery.min.js') }}"></script> -->
+    <script src="{!!url('/js/jquery.min.js')!!}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   
     <script src="{{ asset('js/script.js') }}"></script>

@@ -86,9 +86,9 @@
                         <!-- About me - Bio -->
                         <div class="card">
 							<div class="card-body">
-								<h4 class="card-title">About Me</h4>
+								<h4 class="card-title">Giới thiệu</h4>
 								<div class="form-group mb-0">
-									<label>Biography</label>
+									<label>Tiểu sử tóm lược</label>
 									<textarea class="form-control" name="bio"  rows="5">{{ $profile->bio }}</textarea>
 								</div>
 							</div>

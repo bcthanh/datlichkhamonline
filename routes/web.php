@@ -16,8 +16,12 @@
 //     return view('welcome');
 // });
 
+//route cho tim kiem bac si khi nhap tu khoa - live search
 Route::get('/', 'HomeController@index');
-
+Route::get('/search', 'HomeController@search');
+Route::get('/search/name', 'HomeController@searchName');
+Route::get('/search/address', 'HomeController@searchAddress');
+Route::get('/search/chuyenkhoa', 'HomeController@searchChuyenkhoa');
 /*Route::group(['prefix' => 'api/'], function() {
     Route::resource('proficiency', 'ProficiencyController');
     Route::resource('appointment', 'AppointmentController');
@@ -31,15 +35,15 @@ Auth::routes();
 // login - logout - register - password/reset - email/confirm...
 
 /* Incial page helpdesk and doctor*/
-// Route::get('/medic/home', 'MedicController@home')->name('medic');	
-Route::redirect('/medic/home', '/medic/appointment/home');	
-// Route::get('/help/home', 'HelpController@index')->name('help');
-Route::redirect('/help/home', '/help/appointment/home');
+Route::get('/medic/home', 'MedicController@home')->name('medic');	
+// Route::redirect('/medic/home', '/medic/appointment/home');	
+Route::get('/help/home', 'HelpController@index')->name('help');
+// Route::redirect('/help/home', '/help/appointment/home');
 
 /** Manage doctor */
-Route::get('/help/users/home', 'MedicController@index');
-Route::get('/help/users/delete/{id}', 'MedicController@destroy');
-Route::get('/help/users/active/{id}', 'MedicController@active');
+Route::get('/help/users/home', 'HelpController@listDoctors');
+Route::get('/help/users/delete/{id}', 'HelpController@inactive');
+Route::get('/help/users/active/{id}', 'HelpController@active');
 Route::get('/help/users/edit', 'HelpController@edit');
 
 /** Register a new doctor */
@@ -107,3 +111,12 @@ Route::get('/thanks', 'HomeController@thanks');
 /** Bac si cap nhat profile cua minh */
 Route::get('/medic/profile/edit', 'ProfileController@edit');
 Route::post('/medic/profile/update', 'ProfileController@update');
+Route::post('/schedule-settings', 'ScheduleController@scheduleSettings');
+
+//xem thong tin bac si
+Route::get('/doctors/{id}', 'HomeController@showDoctor');
+Route::get('/doctor-profile/{slug}', 'HomeController@viewProfile');
+Route::get('/booking/{slug}', 'HomeController@booking');
+Route::get('/getSlotsByDate', 'HomeController@getSlotsByDate');
+Route::post('/datlichkham', 'HomeController@datlichkham');
+Route::get('/dsbacsi/{proid}', 'HomeController@dsbacsitheochuyenkhoa');

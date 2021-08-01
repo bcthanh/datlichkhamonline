@@ -36,15 +36,40 @@ class ProficiencyController extends Controller
 
         public function store (Request $request)
         {
-                $this->validate(request(),  [
+            $this->validate(request(),  [
                 'name' => 'required|string|max:50|unique:proficiencies',
+                // 'file' => 'mimes:jpg,jpeg,bmp,png' // Only allow .jpg, .bmp and .png file types.
             ]);
 
-            $proficiency = Proficiency::create([
-                'name' => request('name'),
-            ]);
+            // ensure the request has a file before we attempt anything else.
+            if ($request->hasFile('file')) {
 
-            session()->flash('message', 'Proficiency created successfully!');
+                $request->validate([
+                    'file' => 'mimes:jpg, jpeg,bmp,png' // Only allow .jpg, .bmp and .png file types.
+                ]);
+                // $imagePath = $request->file('file');
+                // $imageName = $imagePath->getClientOriginalName();
+
+                // $path = $request->file('file')->storeAs('uploads', $imageName, 'public');
+                // Save the file locally in the storage/public/ folder under a new folder named /chuyenkhoa
+                // $request->file->store('chuyenkhoa', 'public');
+
+                // Store the record, using the new file hashname which will be it's new filename identity.
+                $imageName = time().'.'.$request->file->extension(); 
+                $request->file->move(public_path('uploads/chuyenkhoa'), $imageName); 
+            }
+            // $proficiency = Proficiency::create([
+            //     'name' => request('name'),
+            // ]);
+
+            $proficiency = new Proficiency([
+                "name" => $request->get('name'),
+                // "pro_avatar" => $request->file->hashName()
+                "pro_avatar" => $imageName
+            ]);
+            $proficiency->save(); // Finally, save the record.
+
+            session()->flash('message', 'Tạo chuyên khoa mới thành công!');
             
             return redirect('/help/proficiency/home');
 
@@ -67,15 +92,43 @@ class ProficiencyController extends Controller
         public function update (Request $request, $id)
         {
            $this->validate($request, [
-                'name' => 'required|string|max:50|unique:proficiencies'
+                'name' => 'required|string|max:50',
+                // 'file' => 'mimes:jpg,jpeg,bmp,png' // Only allow .jpg, .bmp and .png file types.
             ]);
         
-        $proficiency = Proficiency::findOrFail($id);
-        $proficiency->update($request->all());
+            $proficiency = Proficiency::findOrFail($id);
+            if ($request->hasFile('file')) {
 
-        session()->flash('message', 'Proficiency updated successfully!');
-        
-        return redirect('/help/proficiency/home');
+                $request->validate([
+                    'file' => 'mimes:jpg,jpeg,bmp,png' // Only allow .jpg, .bmp and .png file types.
+                ]);
+                // $imagePath = $request->file('file');
+                // $imageName = $imagePath->getClientOriginalName();
+
+                // $path = $request->file('file')->storeAs('uploads', $imageName, 'public');
+                // Save the file locally in the storage/public/ folder under a new folder named /chuyenkhoa
+                // $request->file->store('chuyenkhoa', 'public');
+
+                // Store the record, using the new file hashname which will be it's new filename identity.
+                // $imageName = time().'.'.$request->file->extension(); 
+                // $imagePath = $request->file('file');
+                // $imageName = time();
+                // $imageName .= $imagePath->getClientOriginalName(); 
+                $imageName = time().'.'.$request->file->extension();             
+                $request->file->move(public_path('uploads/chuyenkhoa'), $imageName);
+                //xoa file hien tai
+                if ($proficiency->pro_avatar)
+                    unlink(public_path('uploads/chuyenkhoa/') . $proficiency->pro_avatar); 
+                $proficiency->pro_avatar = $imageName;
+            }
+            // $proficiency->update($request->all());
+            $proficiency->name = request('name');
+            // $imageName = time().'.'.$request->file->extension(); 
+            
+            $proficiency->save();
+            session()->flash('message', 'Cập nhật chuyên khoa thành công!');
+            
+            return redirect('/help/proficiency/home');
 
         }
 

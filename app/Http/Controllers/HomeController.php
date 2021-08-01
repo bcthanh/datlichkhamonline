@@ -40,7 +40,7 @@ class HomeController extends Controller
         })
         ->get();
         // $newdoctors = User::with(->having('role_id', 1)->get();
-        return view('welcome', compact('proficiencies', 'newdoctors', 'colors'));
+        return view('home', compact('proficiencies', 'newdoctors', 'colors'));
     }
 
     public function findUsersDate(Request $request)
@@ -104,5 +104,166 @@ class HomeController extends Controller
 
     public function thanks(){
         return view('thanks');
+    }
+
+    public function searchName(Request $request){
+        $doctors = User::with(['role'])
+        ->whereHas('role', function($query) {
+            $query->where('name', 'Doctor');
+        })->where('name', 'like', '%' . $request->value . '%')->get();
+
+        return response()->json($doctors); 
+    }
+
+    public function searchAddress(Request $request){
+        $doctors = User::with(['role, profile'])
+        ->whereHas('role', function($query) {
+            $query->where('name', 'Doctor');
+        })->where('profile.name', 'like', '%' . $request->value . '%')->get();
+
+        return response()->json($doctors); 
+    }
+
+    public function searchChuyenkhoa(Request $request){
+        $doctors = User::with(['role, proficiencies'])
+        ->whereHas('role', function($query) {
+            $query->where('name', 'Doctor');
+        })
+        ->whereHas('proficiencies', function ($q) use ($request) {
+            $q->where('proficiencies.id', 'like', '%' . $request->value . '%');
+        })
+        ->get();
+
+        return response()->json($doctors); 
+    }
+
+    // public function showDoctor($id)
+    // {
+    //     $detail = User::with('profile')->find($id);
+    //     // $proficiencies = Proficiency::All();
+
+    //     return view ('doctor.show', compact('deail'));
+       
+    // }
+
+    public function search(Request $request){
+        $s = $request->input('s');
+
+        $doctors = User::with('role', 'proficiencies', 'profile')
+        ->whereHas('role', function($query) {
+            $query->where('name', 'Doctor');
+        })->search($s)->orderByDesc('name')
+        ->paginate(10);
+        
+       return view ('search', compact('doctors', 's'));
+        // return view('search');
+    }
+
+    public function showDoctor($id){
+        return view('doctor-profile');
+    }
+    public function viewProfile($slug){
+        $doctor = User::with('scheduletimings', 'profile', 'proficiencies')->where('slug', '=', $slug)->first();
+
+        return view('doctor-profile', compact('doctor', 'slug'));
+    }
+
+    public function booking($slug){
+        $doctor = User::with('scheduletimings', 'profile')->where('slug', '=', $slug)->first();
+
+        $slots = array();
+        $today_in_week = Carbon::now()->dayOfWeek;
+        foreach( $doctor->scheduletimings as $schedule){
+            //tim slots theo tung ngay
+            if ($schedule->day_in_week == $today_in_week){ 
+                $tt = Carbon::parse($schedule->starting_time);
+                while ($tt <= Carbon::parse($schedule->ending_time)){
+                    $slots[] = $tt->format('H:i');
+                    // $tt += $schedule->minutes_per_patient;
+                    $tt->addMinutes($schedule->minutes_per_patient);
+                }
+            }
+        }
+        //lay du lieu cho 15 ngay toi - cho dat lich
+        // $today = Carbon::now();
+        // for ($i = 0; $i < 15; $i++){
+        //     $d = $today->addDays($i);
+        //     // $slots[$d->format('Y-m-d')] = array();
+        //     $slots[$d->format('y-m-d')] = array();
+        //     $diw = $d->dayOfWeek; //tra ve 0 - 1 - 2...-6
+
+        //     foreach( $doctor->scheduletimings as $schedule){
+        //         //tim slots theo tung ngay
+        //         if ($schedule->day_in_week == $diw){ 
+        //             $tt = Carbon::parse($schedule->starting_time);
+        //             while ($tt <= Carbon::parse($schedule->ending_time)){
+        //                 $slots[$d->format('y-m-d')][] = $tt->format('H:i');
+        //                 // $tt += $schedule->minutes_per_patient;
+        //                 $tt->addMinutes($schedule->minutes_per_patient);
+        //             }
+        //         }
+        //     }
+        // }
+
+        //lay du lieu 
+
+        if ($doctor && $slots){
+            return view('booking', compact('doctor', 'slots'));
+        } else {
+            return 'Khong tim thay bac si';
+        }        
+    }
+
+    public function getSlotsByDate(Request $request){
+        $choosen_date = request('choosen_date');
+        $doctor_id = request('doctor_id');
+
+        $slots = array();
+        //co the dung 1 trong 2 cach de chuyen datestring sang date
+        $today_in_week = Carbon::createFromFormat('d/m/Y', $choosen_date)->dayOfWeek;
+        // $today_in_week = Carbon::parse(date_format($choosen_date, 'd/m/y'))->dayOfWeek;
+        $doctor = User::findOrFail($doctor_id);
+        foreach( $doctor->scheduletimings as $schedule){
+            //tim slots theo tung ngay
+            if ($schedule->day_in_week == $today_in_week){ 
+                $tt = Carbon::parse($schedule->starting_time);
+                while ($tt <= Carbon::parse($schedule->ending_time)){
+                    $slots[] = $tt->format('H:i');
+                    // $tt += $schedule->minutes_per_patient;
+                    $tt->addMinutes($schedule->minutes_per_patient);
+                }
+            }
+        }
+
+        return response()->json($slots);
+    }
+
+    public function datlichkham(Request $request){
+        $appointment = Appointment::create([
+            
+            'name' => request('hoten'),
+            'sns' => request('sdt'),
+            'especialidade' => request ('ghichu'), //-- sau nay dich vu -- request ('especialidade'),
+            'data' => request ('giokham'),
+            'user_id' => request ('bacsi_id'),
+            'realizada' => (0)
+        ]);
+
+        session()->flash('message', 'Đặt lịch thành công!');
+        
+        return view('thanks', compact('appointment'));
+    }
+
+    public function dsbacsitheochuyenkhoa($proid){
+        $s = "";
+        $doctors = User::with('role', 'proficiencies', 'profile')
+        ->whereHas('role', function($query) {
+            $query->where('name', 'Doctor');
+        })->whereHas('proficiencies', function($q2) use ($proid){
+            $q2->where('proficiencies.id', $proid);
+        })->orderByDesc('name')
+        ->paginate(10);
+        
+       return view ('search', compact('doctors', 's'));
     }
 }
