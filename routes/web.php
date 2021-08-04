@@ -120,3 +120,5 @@ Route::get('/booking/{slug}', 'HomeController@booking');
 Route::get('/getSlotsByDate', 'HomeController@getSlotsByDate');
 Route::post('/datlichkham', 'HomeController@datlichkham');
 Route::get('/dsbacsi/{proid}', 'HomeController@dsbacsitheochuyenkhoa');
+Route::get('/search-appointment', 'HomeController@searchAppointment');
+Route::post('/search-appointment-result', 'HomeController@searchAppointmentResult');

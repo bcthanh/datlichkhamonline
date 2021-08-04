@@ -31,9 +31,9 @@
                                   <tr>
                                   <th>#</th>
                                   <th>Chuyên khoa</th>
-                                  <th>Anh đại diện</th>
+                                  <th>Ảnh đại diện</th>
                                   <th>Danh sách bác sĩ</th>
-                                  <th></th>
+                                  <th>Thao tác</th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -44,7 +44,7 @@
                                   <td>
                                     <img src="{{ asset('uploads/chuyenkhoa/') . '/'.$proficiency->pro_avatar }}" width="100px" alt="">
                                   </td>
-                                  <td>{{$proficiency->created_at}}</td>
+                                  <!-- <td>{{$proficiency->created_at}}</td> -->
                                   <td>
                                       <!-- <ul> -->
                                         @foreach($proficiency->user as $u)

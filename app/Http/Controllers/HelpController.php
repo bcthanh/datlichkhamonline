@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use App\User;
 use App\role;
 use App\Proficiency;
+use App\Profile;
+use App\Scheduletiming;
 use Closure;
 use Auth;
 use DateTime;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class HelpController extends Controller
 {
@@ -51,6 +54,7 @@ class HelpController extends Controller
         $user = User::create([
             
             'name' => request('name'),
+            'slug' => Str::slug(request('name')),
             'seg_social' => request('seg_social'),
             'email' => request('email'),
             'password' => bcrypt(request('password')),
@@ -65,6 +69,37 @@ class HelpController extends Controller
         foreach ($prof as  $value) {
             $user->proficiencies()->attach(Proficiency::where('id', $value)->first());
         }
+
+        //tao profile
+        $profile = new Profile;
+        $profile->user_id = $user->id;
+        $profile->bio = "Đang cập nhật";
+        $profile->clinic_name = "Đang cập nhật";
+        $profile->clinic_address = "Đang cập nhật";
+        $profile->education = "Đang cập nhật";
+        $profile->experience = "Đang cập nhật";
+        $profile->awards = "Đang cập nhật";
+        $profile->save();
+
+        //tao cac khung gio mac dinh
+        for($i = 0; $i <=6; $i++){            
+            $sch = new Scheduletiming;
+            $sch->user_id = $user->id;
+            $sch->day_in_week = $i;
+            $sch->starting_time = "11:30";
+            $sch->ending_time = "13:00";
+            $sch->minutes_per_patient = "10";
+            $sch->save();
+
+            $sch = new Scheduletiming;
+            $sch->user_id = $user->id;
+            $sch->day_in_week = $i;
+            $sch->starting_time = "17:30";
+            $sch->ending_time = "20:00";
+            $sch->minutes_per_patient = "10";
+            $sch->save();
+        }        
+
         session()->flash('message', 'Thêm Bác sĩ Thành công!');
 
         return redirect('/help/users/home');

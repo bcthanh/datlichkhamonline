@@ -37,7 +37,7 @@ class HomeController extends Controller
         $newdoctors = User::with(['role'])
         ->whereHas('role', function($query) {
             $query->where('name', 'Doctor');
-        })
+        })->orderBy('created_at', 'desc')->take(8)
         ->get();
         // $newdoctors = User::with(->having('role_id', 1)->get();
         return view('home', compact('proficiencies', 'newdoctors', 'colors'));
@@ -178,8 +178,11 @@ class HomeController extends Controller
             if ($schedule->day_in_week == $today_in_week){ 
                 $tt = Carbon::parse($schedule->starting_time);
                 while ($tt <= Carbon::parse($schedule->ending_time)){
-                    $slots[] = $tt->format('H:i');
+                    // $slots[] = $tt->format('H:i');
                     // $tt += $schedule->minutes_per_patient;
+                    
+                    $stu = $this->checkSlotStatus(Carbon::now()->toDateString() . " " .$tt->toTimeString(), $doctor->id);
+                    $slots[] = array("slot" => $tt->format('H:i'), "booked" => $stu);
                     $tt->addMinutes($schedule->minutes_per_patient);
                 }
             }
@@ -214,6 +217,13 @@ class HomeController extends Controller
         }        
     }
 
+    //kiem tra khung gio do bac si co lich hen chua? su dung de hien thi
+    public function checkSlotStatus($time_string, $doctor_id){
+        $appocount = Appointment::where('user_id', '=', $doctor_id)->where('data', '=', $time_string)->get();
+        // $wordCount = $wordlist->count();
+        return $appocount->count() > 0;
+    }
+
     public function getSlotsByDate(Request $request){
         $choosen_date = request('choosen_date');
         $doctor_id = request('doctor_id');
@@ -228,7 +238,8 @@ class HomeController extends Controller
             if ($schedule->day_in_week == $today_in_week){ 
                 $tt = Carbon::parse($schedule->starting_time);
                 while ($tt <= Carbon::parse($schedule->ending_time)){
-                    $slots[] = $tt->format('H:i');
+                    $stu = $this->checkSlotStatus(Carbon::createFromFormat('d/m/Y', $choosen_date)->toDateString() . " " .$tt->toTimeString(), $doctor_id);
+                    $slots[] = array("slot" => $tt->format('H:i'), "booked" => $stu);
                     // $tt += $schedule->minutes_per_patient;
                     $tt->addMinutes($schedule->minutes_per_patient);
                 }
@@ -237,6 +248,8 @@ class HomeController extends Controller
 
         return response()->json($slots);
     }
+
+   
 
     public function datlichkham(Request $request){
         $appointment = Appointment::create([
@@ -265,5 +278,16 @@ class HomeController extends Controller
         ->paginate(10);
         
        return view ('search', compact('doctors', 's'));
+    }
+
+    public function searchAppointment(){
+        return view('searchAppointment');
+    }
+
+    public function searchAppointmentResult(Request $resquest){
+        $s = request('s');
+        $appointementList = Appointment::where('sns', '=', $s)->orderBy('data', 'desc')->take(25)->get();
+
+        return view('searchAppointmentResult', compact('appointementList', 's'));
     }
 }

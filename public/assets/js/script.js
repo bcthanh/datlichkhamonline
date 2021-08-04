@@ -101,7 +101,7 @@ Version      : 1.3
                 url: '/getSlotsByDate',
                 data:{'choosen_date': choosen_date, 'doctor_id': doctor_id},
                 success: function(data){
-
+                	console.log(data);
                     // let op ='<option value="0" selected disabled>Select a Doctor</option>';
 
                     // for(var i=0; i<data.length; i++){
@@ -115,8 +115,11 @@ Version      : 1.3
                     let slots = "<ul class='clearfix'>";
                     $.each(data, function(key, value){
                     	slots += '<li>';
-						slots += '	<a class="timing" href="#">';
-						slots += '		<span>' + value + '</span> <span><!-- AM --></span>';
+                    	if (value.booked)
+                    		slots += '	<a class="timing booked" href="#">';
+                    	else
+							slots += '	<a class="timing" href="#">';
+						slots += '		<span>' + value.slot + '</span> <span><!-- AM --></span>';
 						slots += '	</a>';					
 						slots += '</li>';
 					});

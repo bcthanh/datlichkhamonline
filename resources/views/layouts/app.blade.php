@@ -28,8 +28,9 @@
                         <li>
                             <a href="{{ url('/help/appointment/home') }}"><i class="fas fa-angle-right"></i> Tất cả</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="{{ url('/help/appointment/register') }}"><i class="fas fa-angle-right"></i> Thêm mới</a>
+                        </li> -->
                     </ul>
                 </li>
                 <li>

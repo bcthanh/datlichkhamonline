@@ -56,10 +56,10 @@ class AppointmentDoctorController extends Controller
     {
 
         $appointment = Appointment::find($id);
-        $proficiencies = Proficiency::All();
+        // $proficiencies = Proficiency::All();
         //CongThanh fix - khi click vao nut Perform de cap nhat cho appointment
         // return view ('medic.appointment.edit', compact('appointment', 'users', 'proficiencies'));
-        return view ('medic.appointment.edit', compact('appointment', 'proficiencies'));
+        return view ('medic.appointment.edit', compact('appointment'));
 
     }
 

@@ -38,23 +38,11 @@
 							<li class="{{ Request::is('index') ? 'active' : '' }}">
 								<a href="index">Trang chủ</a>
 							</li>
-							<li class="has-submenu <?php if($page=="review" || $page=="register" || $page=="doctor-dashboard" || $page=="appointments" || $page=="schedule-timings" || $page=="my-patients" || $page=="patient-profile" || $page=="chat-doctor" || $page=="invoices" || $page=="doctor-profile-settings") { echo 'active'; } ?>">
-								<a href="">Doctors <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li class="<?php if($page=="doctor-dashboard") { echo 'active'; } ?>"><a href="doctor-dashboard">Doctor Dashboard</a></li>
-									<li class="<?php if($page=="appointments") { echo 'active'; } ?>"><a href="appointments">Appointments</a></li>
-									<li class="<?php if($page=="schedule-timings") { echo 'active'; } ?>"><a href="schedule-timings">Schedule Timing</a></li>
-									<li class="<?php if($page=="my-patients") { echo 'active'; } ?>"><a href="my-patients">Patients List</a></li>
-									<li class="<?php if($page=="patient-profile") { echo 'active'; } ?>"><a href="patient-profile">Patients Profile</a></li>
-									<li class="<?php if($page=="chat-doctor") { echo 'active'; } ?>"><a href="chat-doctor">Chat</a></li>
-									<li class="<?php if($page=="invoices") { echo 'active'; } ?>"><a href="invoices">Invoices</a></li>
-									<li class="<?php if($page=="doctor-profile-settings") { echo 'active'; } ?>"><a href="doctor-profile-settings">Profile Settings</a></li>
-									<li class="<?php if($page=="review") { echo 'active'; } ?>"><a href="reviews">Reviews</a></li>
-									<li class="<?php if($page=="register") { echo 'active'; } ?>"><a href="doctor-register">Doctor Register</a></li>
-								</ul>
+							<li class="has-submenu <?php if($page=="voice-call" || $page=="video-call" || $page=="search" || $page=="calendar" || $page=="components" || $page=="invoices1" || $page=="invoice-view" || $page=="blank-page" || $page=="login" || $page=="register1" || $page=="forgot-pswd") { echo 'active'; } ?>">
+								<a href="">Giới thiệu <i class="fas fa-chevron-down"></i></a>								
 							</li>		
 							<li class="has-submenu <?php if($page=="map-grid" || $page=="map-list" || $page=="search1" || $page=="doctor-profile" || $page=="booking" || $page=="checkout" || $page=="booking-success" || $page=="patient-dashboard" || $page=="favourites" || $page=="chat" || $page=="profile-settings" || $page=="change-password") { echo 'active'; } ?>">
-								<a href="">Hướng dẫn <i class="fas fa-chevron-down"></i></a>
+								<a href="">Chức năng<i class="fas fa-chevron-down"></i></a>
 								<ul class="submenu">
 									<li class="has-submenu <?php if($page=="map-grid" || $page=="map-list") { echo 'active'; } ?>">
 										<a href="#">Tìm kiếm bác sĩ</a>
@@ -63,28 +51,19 @@
 											<li class="<?php if($page=="map-list") { echo 'active'; } ?>"><a href="map-list">Theo chuyên khoa</a></li>
 										</ul>
 									</li>
-									<li class="<?php if($page=="search1") { echo 'active'; } ?>"><a href="search">Tìm kiếm bác sĩ</a></li>
+									<li class="<?php if($page=="search1") { echo 'active'; } ?>"><a href="/search-appointment">Truy vấn thông tin đặt lịch</a></li>
 									<li class="<?php if($page=="doctor-profile") { echo 'active'; } ?>"><a href="doctor-profile">Đặt lịch</a></li>
-									<li class="<?php if($page=="booking") { echo 'active'; } ?>"><a href="booking">Booking</a></li>
-									<li class="<?php if($page=="checkout") { echo 'active'; } ?>"><a href="checkout">Checkout</a></li>
-									<li class="<?php if($page=="booking-success") { echo 'active'; } ?>"><a href="booking-success">Booking Success</a></li>
-									<li class="<?php if($page=="patient-dashboard") { echo 'active'; } ?>"><a href="patient-dashboard">Patient Dashboard</a></li>
-									<li class="<?php if($page=="favourites") { echo 'active'; } ?>"><a href="favourites">Favourites</a></li>
-									<li class="<?php if($page=="chat") { echo 'active'; } ?>"><a href="chat">Chat</a></li>
-									<li class="<?php if($page=="profile-settings") { echo 'active'; } ?>"><a href="profile-settings">Profile Settings</a></li>
-									<li class="<?php if($page=="change-password") { echo 'active'; } ?>"><a href="change-password">Change Password</a></li>
+									
 								</ul>
 							</li>
 
-							<li class="has-submenu <?php if($page=="voice-call" || $page=="video-call" || $page=="search" || $page=="calendar" || $page=="components" || $page=="invoices1" || $page=="invoice-view" || $page=="blank-page" || $page=="login" || $page=="register1" || $page=="forgot-pswd") { echo 'active'; } ?>">
-								<a href="">Giới thiệu <i class="fas fa-chevron-down"></i></a>								
-							</li>
+							
 							<li class="has-submenu <?php if($page=="blog-list" || $page=="blog-grid" || $page=="blog-details") { echo 'active'; } ?>">
                             <a href="">Tin tức <i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu">
-                                <li class="<?php if($page=="blog-list") { echo 'active'; } ?>"><a href="blog-list">Blog List</a></li>
-                                <li class="<?php if($page=="blog-grid") { echo 'active'; } ?>"><a href="blog-grid">Blog Grid</a></li>
-                                <li class="<?php if($page=="blog-details") { echo 'active'; } ?>"><a href="blog-details">Blog Details</a></li>
+                                <li class="<?php if($page=="blog-list") { echo 'active'; } ?>"><a href="blog-list">Thông  tin y tế hữu ích</a></li>
+                                <li class="<?php if($page=="blog-grid") { echo 'active'; } ?>"><a href="blog-grid">Tình hình y tế trong và ngoài nước</a></li>
+                                <li class="<?php if($page=="blog-details") { echo 'active'; } ?>"><a href="blog-details">Văn bản - Quy định</a></li>
                             </ul>
                         </li>
 						

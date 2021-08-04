@@ -3,7 +3,7 @@
      <style>
      </style>
             <div class="container">
-              <div class="page-title">Lịch khám</div>
+              <div class="page-title">Thông tin bệnh nhân</div>
                 <div class="panel panel-default">
                     
                          <div class="panel-body">

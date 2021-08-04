@@ -15,7 +15,7 @@
                             <label for="name" class="col-md-4 control-label">Tên bệnh nhân</label>
 
                             <div class="col-md-8">
-                                <input id="name" type="text" class="form-control" name="name" value="{{$appointment->name}}" required autofocus>
+                                <input id="name" type="text" class="form-control" name="name" value="{{$appointment->name}}" required autofocus disabled>
                                 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -29,7 +29,7 @@
                             <label for="sns" class="col-md-4 control-label">Số điện thoại</label>
 
                             <div class="col-md-8">
-                                <input id="sns" type="number" class="form-control" name="sns" value="{{$appointment->sns}}" required>
+                                <input id="sns" type="number" class="form-control" name="sns" value="{{$appointment->sns}}" disabled>
 
                                 @if ($errors->has('sns'))
                                     <span class="help-block">
@@ -38,26 +38,7 @@
                                 @endif
                             </div>
                         </div>                        
-                        <!-- especialidade-->
-                        <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }} row">
-                            <label for="especialidade" class="col-md-4 control-label especialidade">Chuyên khoa</label>
-                            <div class="col-md-8">
-                                        <select class="form-control especialidade" id="especialidade" name="especialidade" 
-                                        placeholder="{{$appointment->especialidade}}" value="">                                 
-                                        @foreach ($proficiencies as $Proficiency)
-                                            <option value="{{$Proficiency->id}}" {{ $appointment->especialidade == $Proficiency->name ? "selected" : 0 }}
-                                                > {{ $Proficiency->name }} </option>
-                                            }
-                                            }
-                                        @endforeach
-                                        </select>   
-                                @if ($errors->has('especialidade'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('Proficiency') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        
                         <!-- Hora e data consulta-->
                         <div class="form-group{{ $errors->has('data') ? ' has-error' : '' }} row">
                             <label for="data" class="col-md-4 control-label">Thời gian khám</label>
@@ -66,7 +47,7 @@
                                 
                                 
 
-                                <input id="data" type="datetime-local" class="form-control data" name="data" value="<?= str_replace(' ', 'T', $appointment->data)?>" required>
+                                <input id="data" type="datetime-local" class="form-control data" name="data" value="<?= str_replace(' ', 'T', $appointment->data)?>" disabled>
 
                                 @if ($errors->has('data'))
                                     <span class="help-block">
@@ -79,7 +60,7 @@
                         <div class="form-group{{ $errors->has('user_id') ? ' has-error' : '' }} row">
                             <label for="user_id" class="col-md-4 control-label">Bác sĩ</label>
                             <div class="col-md-8">             
-                                    <select class="form-control user_id" id="user_id" name="user_id" place>
+                                    <select class="form-control user_id" id="user_id" name="user_id" disabled>
                                         <option value="{{$appointment->user->id}}">{{$appointment->user->name}}</option>
                                     @if (empty($users))                                
                                             <option value="" disabled selected>Không tìm thấy bác sĩ</option>    
@@ -92,12 +73,21 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }} row">
+                            <label for="especialidade" class="col-md-4 control-label">Ghi chú</label>
+
+                            <div class="col-md-8">
+                                <textarea id="especialidade" class="form-control" name="especialidade" disabled>
+                                    {{ $appointment->especialidade }}
+                                </textarea> 
+                            </div>
+                        </div>
                         {{-- Submit --}}
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <!-- <button type="submit" class="btn btn-primary">
                                     Cập nhật lịch hẹn
-                                </button>
+                                </button> -->
                                 <a href="/help/appointment/home">
                                 <button type="button" class="btn btn-warning " >
                                 Trở lại

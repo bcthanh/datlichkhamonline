@@ -40,7 +40,7 @@
                             </div>
                         </div>                    
                         <!-- especialidade-->
-                        <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }} row">
+                        <!-- <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }} row">
                             <label for="especialidade" class="col-md-4 control-label">Chuyên khoa</label>
                             <div class="col-md-8">
                                         <select class="form-control" id="especialidade" name="especialidade" 
@@ -58,7 +58,7 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> -->
                         <!-- Hora e data consulta-->
                         <div class="form-group{{ $errors->has('data') ? ' has-error' : '' }} row">
                             <label for="data" class="col-md-4 control-label">Thời gian đăng ký khám</label>
@@ -77,7 +77,15 @@
                             </div>
                         </div>
 
-                   
+                        <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }} row">
+                            <label for="especialidade" class="col-md-4 control-label">Ghi chú</label>
+
+                            <div class="col-md-8">
+                                <textarea id="especialidade" class="form-control" name="especialidade" disabled>
+                                    {{ $appointment->especialidade }}
+                                </textarea> 
+                            </div>
+                        </div>
 
                          </form>
                     <form class="form-horizontal" role="form" method="POST" action="/medic/home/appointment/{{$appointment->id}}">

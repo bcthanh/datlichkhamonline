@@ -80,10 +80,14 @@
 											<!-- Time Slot -->
 											<div class="time-slot">
 												<ul class="clearfix">
-													@foreach ($slots as $slot)
+													@foreach ($slots as $i=>$slot)
 													<li>
-														<a class="timing" href="#">
-															<span>{{ $slot }}</span> 
+														<a class="timing
+														@if ($slot['booked'])
+															booked
+														@endif
+														" href="#" disabled>
+															<span>{{ $slot['slot'] }}</span> 
 														</a>					
 													</li>
 													@endforeach

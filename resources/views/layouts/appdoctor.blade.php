@@ -34,7 +34,10 @@
                 </li>  
                 <li>
                     <a href="{{ url('/medic/schedule-timings') }}"><i class="fas fa-user-friends"></i> Thiết lập thời gian khám</a>                    
-                </li>                
+                </li>
+                <!-- <li>
+                    <a href="{{ url('/medic/truyvan-benhnhan') }}"><i class="fas fa-user-friends"></i>Truy vấn thông tin bệnh nhân</a>                    
+                </li>       -->          
             </ul>
         </nav>
         <div id="body" class="active">

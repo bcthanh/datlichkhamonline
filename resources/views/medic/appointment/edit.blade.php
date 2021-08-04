@@ -18,7 +18,7 @@
                                 <input id="name" type="text" class="form-control"value="{{$appointment->name}}" disabled >
                                 @if ($errors->has('name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('Pacient Name') }}</strong>
+                                        <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -39,26 +39,7 @@
                                 @endif
                             </div>
                         </div>                    
-                        <!-- especialidade-->
-                        <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }} row">
-                            <label for="especialidade" class="col-md-4 control-label">Chuyên khoa</label>
-                            <div class="col-md-8">
-                                        <select class="form-control" id="especialidade" name="especialidade" 
-                                        placeholder="{{$appointment->especialidade}}" value="" disabled>
-                                            @foreach ($proficiencies as $Proficiency)
-                                            <option value="{{$Proficiency->id}}" {{ $appointment->especialidade == $Proficiency->name ? "selected" : 0 }}
-                                                > {{ $Proficiency->name }} </option>
-                                            }
-                                            }
-                                            @endforeach
-                                        </select>   
-                                @if ($errors->has('especialidade'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('Proficiency') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        
                         <!-- Hora e data consulta-->
                         <div class="form-group{{ $errors->has('data') ? ' has-error' : '' }} row">
                             <label for="data" class="col-md-4 control-label">Ngày hẹn khám</label>
@@ -77,7 +58,15 @@
                             </div>
                         </div>
 
-                   
+                        <div class="form-group{{ $errors->has('especialidade') ? ' has-error' : '' }} row">
+                            <label for="especialidade" class="col-md-4 control-label">Ghi chú</label>
+
+                            <div class="col-md-8">
+                                <textarea id="especialidade" class="form-control" name="especialidade" disabled>
+                                    {{ $appointment->especialidade }}
+                                </textarea> 
+                            </div>
+                        </div>
 
                          </form>
                     <form class="form-horizontal" role="form" method="POST" action="/medic/home/appointment/{{$appointment->id}}">

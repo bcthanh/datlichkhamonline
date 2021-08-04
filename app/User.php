@@ -73,7 +73,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'especialidade', 'seg_social', 'hora_in', 'hora_out'
+        'name', 'email', 'password', 'especialidade', 'slug', 'seg_social', 'hora_in', 'hora_out'
     ];
 
     protected $filter = [

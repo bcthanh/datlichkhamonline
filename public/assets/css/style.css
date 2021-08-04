@@ -3571,6 +3571,11 @@ html.menu-opened body {
     right: 6px;
     top: 6px;
 }
+.time-slot li .timing.booked {
+	background-color: violet;
+	border: 1px solid violet;
+	color: #fff;
+}
 .schedule-list {
     border-bottom: 1px solid #cfcfcf;
     margin-bottom: 50px;

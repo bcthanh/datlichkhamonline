@@ -39,9 +39,9 @@ class Appointment extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
     
-    public function proficiency(){
-        return $this->belongsTo('App\Proficiency', 'especialidade');
-    }
+    // public function proficiency(){
+    //     return $this->belongsTo('App\Proficiency', 'especialidade');
+    // }
 
     public function scopeSearch($query, $s)
     

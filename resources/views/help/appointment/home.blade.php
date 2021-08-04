@@ -8,12 +8,12 @@
                   
                     <div class="panel-body">
                       <div class="col-md-12 text-right">    
-                        <form class="form-inline my-2 my-lg-0" >
+                        <!-- <form class="form-inline my-2 my-lg-0" >
                           <a href="{{ url('/help/appointment/register') }}" button type="button" class="btn btn-primary mr-auto p-2">
-                            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-                            Tạo lịch hẹn
-                            </button>
-                          </a>
+                            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> -->
+                            <!-- Tạo lịch hẹn -->
+                           <!--  </button>
+                          </a> -->
                           <form  method="get" class="p-2">
                               <input class="form-control mr-sm-2 justify-content-end" type="text" placeholder="Nhập từ khóa" name="s"
                               values=" {{ isset($s) ? $s : '' }} ">
@@ -30,8 +30,8 @@
                                   <th>Tên bệnh nhân</th>
                                   <th>Số điện thoại</th>
                                   <th>Thời gian khám</th>
-                                  <th>Chuyên khoa</th>
                                   <th>Bác sĩ</th>
+                                  <th>Ghi chú</th>
                                   <th>Trạng thái</th>
                                   <th></th>
                                   </tr>
@@ -44,13 +44,9 @@
                                   <td>{{$appointment->name}}</td>
                                   <td>{{$appointment->sns}}</td>
                                   <td>{{$appointment->data}}</td>
-                                  @if(isset($appointment->proficiency->name))
-                                  <td>{{$appointment->proficiency->name }}</td>
-                                  @else
-                                  <td>...</td>
-                                  @endif
-                                  
+
                                   <td>{{$appointment->user->name}}</td>
+                                  <td>{{$appointment->especialidade }}</td>
                                   
                                   @if ($appointment->realizada == 0)
                                       <td>Đang chờ</td>
@@ -62,13 +58,13 @@
                                   @if ($appointment->realizada == 0)
 
                                   <td>
-                                    <a href="edit/{{$appointment->id}}" button type="button" class="btn btn-primary btn-sm" >Chỉnh sửa</button>
+                                    <a href="edit/{{$appointment->id}}" button type="button" class="btn btn-primary btn-sm" >Xem</button>
                                   </td>
                                     <td>
                                   <a href="/help/home/appointment/delete/{{$appointment->id}}" button type="button" class="btn btn-danger btn-sm" >Xóa</button>
                                   </td>
                                   @elseif ($appointment->realizada == 1)
-                                  <td><a button type="button" class="btn btn-primary btn-sm" disabled>Chỉnh sửa</button>
+                                  <td><a button type="button" class="btn btn-primary btn-sm">Xem</button>
                                   </td>
                                   <td>
                                   <a button type="button" class="btn btn-danger btn-sm" disabled>Xóa</button>
